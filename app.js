@@ -1,7 +1,7 @@
 import express from "express";
-import path from "path";
 import adminRoutes from "./routes/admin.route.js";
 import shopRoutes from "./routes/shop.route.js";
+import { get404 } from "./controllers/error.controller.js";
 
 const app = express();
 app.set('view engine', 'ejs')
@@ -12,9 +12,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 
-app.use((req, res) => {
-  res.sendFile(path.join(rootDir, "views", "404.html"));
-});
+app.use(get404);
 
 app.listen(3000, () => {
   console.log("server started on port 3000");
